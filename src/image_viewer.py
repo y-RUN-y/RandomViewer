@@ -180,6 +180,7 @@ class ToolBar(QToolBar):
             self.parent().img = img
             self.parent().load_image(img[1])
             mark_viewed(img[0])
+            return
         if database_empty():
             QMessageBox.information(self.parent(), "通知", "当前文件夹没有图片，请重新选择文件夹。")
             # 清除当前显示的图片
