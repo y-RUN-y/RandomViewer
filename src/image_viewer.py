@@ -102,6 +102,14 @@ class ImageDisplayWidget(QWidget):
         scaled_w = int(orig_w * self.parent.scale)
         scaled_h = int(orig_h * self.parent.scale)
 
+        # 限制拖拽范围
+        max_offset_x = max(0, (scaled_w - self.width()) // 2)
+        max_offset_y = max(0, (scaled_h - self.height()) // 2)
+        self.parent.offset = (
+            max(-max_offset_x, min(self.parent.offset[0], max_offset_x)),
+            max(-max_offset_y, min(self.parent.offset[1], max_offset_y))
+        )
+
         # 计算绘制位置（基于偏移量居中）
         center_x = (self.width() - scaled_w) // 2 + self.parent.offset[0]
         center_y = (self.height() - scaled_h) // 2 + self.parent.offset[1]
