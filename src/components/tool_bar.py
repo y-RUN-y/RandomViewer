@@ -1,4 +1,11 @@
-from PySide6.QtWidgets import QToolBar, QWidget, QLabel, QFileDialog, QMessageBox, QPushButton
+from PySide6.QtWidgets import (
+    QToolBar,
+    QWidget,
+    QLabel,
+    QFileDialog,
+    QMessageBox,
+    QPushButton,
+)
 from PySide6.QtGui import QAction
 from PySide6.QtCore import QThread, Signal, Qt
 import sqlite3
@@ -6,8 +13,14 @@ import os
 import subprocess
 from send2trash import send2trash
 
-from utils.data_manager import database_empty, clear_images, get_random_unviewed_image, delete_image
+from utils.data_manager import (
+    database_empty,
+    clear_images,
+    get_random_unviewed_image,
+    delete_image,
+)
 from utils.conf_manager import configer
+
 
 class ToolBar(QToolBar):
     def __init__(self, parent):
@@ -99,7 +112,6 @@ class ToolBar(QToolBar):
             }
             """
         )
-        
 
     def scan(self, mode):
         if mode == 0:
@@ -139,7 +151,7 @@ class ToolBar(QToolBar):
         send2trash(self.parent().img[1])
         delete_image(self.parent().img[0])
         self.parent().show_random_img()
-    
+
     def open_image_directory(self):
         if self.parent().qimage is None:
             return
@@ -149,7 +161,7 @@ class ToolBar(QToolBar):
         if not os.path.exists(self.parent().img[1]):
             QMessageBox.warning(self, "警告", "目标图片文件不存在。")
             return
-        subprocess.run(['explorer.exe', '/select,', self.parent().img[1]])
+        subprocess.run(["explorer.exe", "/select,", self.parent().img[1]])
 
 
 class ScanThread(QThread):

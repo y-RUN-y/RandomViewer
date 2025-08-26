@@ -8,7 +8,13 @@ class Configer:
         self.filename = filename
         if not os.path.exists(self.filename):
             open(self.filename, "w").close()
-            self.config["Window"] = {"x": 0, "y": 0, "width": 1080, "height": 720, "max": False}
+            self.config["Window"] = {
+                "x": 0,
+                "y": 0,
+                "width": 1080,
+                "height": 720,
+                "max": False,
+            }
             self.config["Path"] = {"dir": ""}
             self.save_config()
         else:

@@ -13,7 +13,7 @@ class ImageViewer(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("RandomViewer")
-        
+
         # 设置窗口初始位置和大小
         screen = QApplication.primaryScreen()
         screen_width = screen.availableGeometry().width()
@@ -37,7 +37,7 @@ class ImageViewer(QMainWindow):
         self.resize(width, height)
         if configer.config["Window"].getboolean("max", False):
             self.showMaximized()
-        
+
         # 工具栏
         self.toolbar = ToolBar(self)
         self.addToolBar(self.toolbar)
@@ -102,7 +102,10 @@ class ImageViewer(QMainWindow):
         #     else Qt.SmoothTransformation
         # )
         self.cached_scaled_image = self.qimage.scaled(
-            final_width, final_height, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation
+            final_width,
+            final_height,
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation,
         )
         self.toolbar.scale_percent.setText(f"{self.scale:.2f}x")
 
@@ -140,7 +143,9 @@ class ImageViewer(QMainWindow):
             return
         if database_empty():
             QMessageBox.information(
-                self, "通知", "当前文件夹没有图片或数据库已被清空，请重新选择文件夹扫描。"
+                self,
+                "通知",
+                "当前文件夹没有图片或数据库已被清空，请重新选择文件夹扫描。",
             )
             # 清除当前显示的图片
             self.qimage = None
@@ -169,14 +174,15 @@ class ImageViewer(QMainWindow):
         configer.save_config()
         close_database()  # 关闭数据库连接
         return super().closeEvent(event)
-    
+
     def changeEvent(self, event):
         if event.type() == QEvent.Type.WindowStateChange:
             if not self.isMaximized() and not self.isMinimized():
                 self.move(self.default_x, self.default_y)
                 self.resize(self.default_width, self.default_height)
         return super().changeEvent(event)
-    
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     viewer = ImageViewer()
