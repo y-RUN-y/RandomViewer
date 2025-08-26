@@ -51,7 +51,7 @@ RandomViewer 是一个随机图片查看器，能够从指定文件夹中随机�
 如果需要将应用打包为可执行文件，可使用以下命令：
 
 ```bash
-pixi run pyinstaller --name RandomViewer --icon=assert/icon.ico --windowed --onefile src/main.py
+pixi run pyinstaller --name RandomViewer --icon=assert/icon.ico --windowed --onefile src/image_viewer.py
 ```
 
 打包后的可执行文件会生成在 `dist` 目录下。
