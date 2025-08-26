@@ -96,13 +96,13 @@ class ImageViewer(QMainWindow):
         final_height = int(orig_height * self.scale)
 
         # 选择缩放模式
-        transform_mode = (
-            Qt.FastTransformation
-            if (final_width > 10000 or final_height > 10000)
-            else Qt.SmoothTransformation
-        )
+        # transform_mode = (
+        #     Qt.FastTransformation
+        #     if (final_width > 10000 or final_height > 10000)
+        #     else Qt.SmoothTransformation
+        # )
         self.cached_scaled_image = self.qimage.scaled(
-            final_width, final_height, Qt.KeepAspectRatio, transform_mode
+            final_width, final_height, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation
         )
         self.toolbar.scale_percent.setText(f"{self.scale:.2f}x")
 
