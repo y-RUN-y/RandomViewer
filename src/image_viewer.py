@@ -24,24 +24,21 @@ class ImageViewer(QMainWindow):
         self.default_height = int(screen_height * 0.75)
 
         if configer.config["Window"].getboolean("max", False):
-            x = self.default_x
-            y = self.default_y
-            width = self.default_width
-            height = self.default_height
+            self.resize(screen_width, screen_height)
+            self.showMaximized()
         else:
             x = configer.config["Window"].getint("x", self.default_x)
             y = configer.config["Window"].getint("y", self.default_y)
             width = configer.config["Window"].getint("width", self.default_width)
             height = configer.config["Window"].getint("height", self.default_height)
-        self.move(x, y)
-        self.resize(width, height)
-        if configer.config["Window"].getboolean("max", False):
-            self.showMaximized()
+            self.move(x, y)
+            self.resize(width, height)
 
         # 工具栏
         self.toolbar = ToolBar(self)
         self.addToolBar(self.toolbar)
 
+        # 图片查看区
         self.view = ImageDisplayWidget(self)  # 自定义绘制控件
         self.view.resize(self.width(), self.height() - self.toolbar.height())
         self.setCentralWidget(self.view)
@@ -95,12 +92,6 @@ class ImageViewer(QMainWindow):
         final_width = int(orig_width * self.scale)
         final_height = int(orig_height * self.scale)
 
-        # 选择缩放模式
-        # transform_mode = (
-        #     Qt.FastTransformation
-        #     if (final_width > 10000 or final_height > 10000)
-        #     else Qt.SmoothTransformation
-        # )
         self.cached_scaled_image = self.qimage.scaled(
             final_width,
             final_height,
